@@ -1,17 +1,25 @@
+debugger;
 import { Component, OnInit } from "@angular/core";
 import { UserCredentials } from "../model/user-credentials";
+import {LoginFormComponent} from "../login-form/login-form.component";
+import {LoginService} from "../login.service";
 
 @Component({
   selector: "app-login-page",
   templateUrl: "./login-page.component.html",
   styleUrls: ["./login-page.component.css"],
+  imports: [
+    LoginFormComponent,
+  ],
+  standalone: true
 })
 export class LoginPageComponent implements OnInit {
-  constructor() {}
+  constructor(private loginService : LoginService) {}
 
   ngOnInit(): void {}
 
-  onLogin(UserCredentials: UserCredentials) {
-    // À faire
+  onLogin(login : {username: string; password: string}) {
+    console.log("onLogin inside")
+    this.loginService.login(login)
   }
 }

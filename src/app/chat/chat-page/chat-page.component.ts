@@ -1,14 +1,23 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
+// @ts-ignore
 import { AuthenticationService } from "src/app/login/authentication.service";
 import { Message } from "../message.model";
 import { MessagesService } from "../messages.service";
-import { FormBuilder } from "@angular/forms";
+import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: "app-chat-page",
   templateUrl: "./chat-page.component.html",
   styleUrls: ["./chat-page.component.css"],
+  imports: [
+    ReactiveFormsModule,
+    DatePipe,
+    NgForOf,
+    NgIf
+  ],
+  standalone: true
 })
 export class ChatPageComponent implements OnInit, OnDestroy {
   messages$ = this.messagesService.getMessages();
@@ -28,7 +37,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
     private messagesService: MessagesService,
     private authenticationService: AuthenticationService
   ) {
-    this.usernameSubscription = this.username$.subscribe((u) => {
+    this.usernameSubscription = this.username$.subscribe((u: string | null) => {
       this.username = u;
     });
   }
